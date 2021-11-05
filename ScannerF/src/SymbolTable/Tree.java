@@ -1,5 +1,9 @@
 package SymbolTable;
 
+/**
+ * Binary Search Tree done using nodes and ordered by alphabetical order
+ * @param <T>
+ */
 public class Tree<T extends Comparable<T>> {
 
     private Node<T> root;

@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Token class to save each of them
+ */
 public class Token {
 
     private Types type;

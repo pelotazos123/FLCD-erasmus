@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Enum class for saving the regex
+ */
 public enum Types {
 
 

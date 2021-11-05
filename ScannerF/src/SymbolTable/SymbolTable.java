@@ -1,5 +1,8 @@
 package SymbolTable;
 
+/**
+ * SymbolClass that implements a tree
+ */
 public class SymbolTable {
 
     private final Tree<String> tree;

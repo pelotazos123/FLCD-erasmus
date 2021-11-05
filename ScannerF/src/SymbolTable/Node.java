@@ -1,5 +1,9 @@
 package SymbolTable;
 
+/**
+ * Node class which compones the tree
+ * @param <T>
+ */
 public class Node <T extends Comparable<T>>{
 
     private T info;

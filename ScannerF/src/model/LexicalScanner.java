@@ -11,6 +11,11 @@ import java.util.regex.Pattern;
 
 public class LexicalScanner {
 
+    /**
+     * Checks the regex
+     * @param input, regex given
+     * @return the token and its type, if not valid one, error
+     */
     public ArrayList<Token> lex(String input){
         final ArrayList<Token> tokens = new ArrayList<>();
         final StringTokenizer st = new StringTokenizer(input);

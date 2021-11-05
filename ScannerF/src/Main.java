@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main class to execute the scanner
+ */
 public class Main {
 
     public static List<String> code;
@@ -31,6 +34,10 @@ public class Main {
         }
     }
 
+    /**
+     * Method to read the files
+     * @param file path
+     */
     public static void reader(String file){
         BufferedReader bf = null;
         String line;
