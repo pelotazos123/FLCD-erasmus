@@ -1,0 +1,31 @@
+int max():
+	int a
+	int b
+	int c 
+		if (a > b)
+			if (a > c)
+				return a	
+	return c
+		if (b > c)
+			return b
+		return c
+	
+int min():
+	int a
+	int b
+	int c 
+		if (a < b)
+			if (a < c)
+				return a	
+	return c
+		if (b < c)
+			return b
+	return c
+
+bool prime(int n):
+	for (int i = n; i >= 0; i--)
+		if (n%i==0)
+			return false
+	return true
+
+			

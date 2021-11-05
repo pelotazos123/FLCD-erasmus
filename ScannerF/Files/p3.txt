@@ -1,0 +1,18 @@
+int sum(int n): 
+	int x = 0
+	for ( int i = 0 ; i <= n ; i++ )
+		x += i
+		
+int maxN(int[] n):
+	int max = n[0]
+	for ( int i = 0 ; i < n[].length ; i++ )
+		if ( n[i] > max )
+			max = n[i]
+	return max 
+
+int minN(int[] n):
+	int min = n[0]
+	for ( int i = 0 ; i < n[].length ; i++ )
+		if ( n[i] > min )
+			min = n[i]
+	return min
