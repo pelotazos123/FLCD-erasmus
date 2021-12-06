@@ -1,50 +1,108 @@
 package model;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Grammar {
 
-    private List<String> nonTerminal = new ArrayList<String>();
-    private List<String> terminals = new ArrayList<String>();
-    HashMap<String, List<String>> prds = new HashMap<>();
+    Set<String> nonTerminals = new HashSet<>();
+    Set<String> terminals = new HashSet<>();
 
+    String startingSymbol;
 
-    public Grammar(String fileName) throws IOException {
-        fileReader(fileName);
+    Map<List<String>, List<List<String>>> productions = new HashMap<>();
+
+    String fileName;
+
+    public Grammar(String fileName){
+        this.fileName = fileName;
+        fileReader();
     }
 
-    public void fileReader(String fileName) throws IOException {
-        BufferedReader bf = new BufferedReader(new FileReader(fileName));
+    public Set<String> getNonTerminals() {
+        return nonTerminals;
+    }
 
-        String nt = bf.readLine();
-        nonTerminal = Arrays.stream(nt.split(",")).toList();
+    public Set<String> getTerminals() {
+        return terminals;
+    }
 
-        String ter = bf.readLine();
-        terminals = Arrays.stream(ter.split(",")).toList();
+    public void fileReader(){
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            String line = br.readLine();
 
-        while (bf.readLine() != null){
-            String prd = bf.readLine();
-            String[] prdEls = prd.trim().split(":");
+            int i = 0;
 
-            String prdNT = prdEls[0];
-            String[] prdNTList = prdNT.split("\\|");
-
-            String prdRes = prdEls[1];
-            List<String> prdResList = List.of(prdRes.split("\\|"));
-
-            for (String nts: prdNTList){
-                List<String> existingPrds = prds.get(nonTerminal);
+            while(line != null){
+                if(!line.equals("")){
+                    if (i == 0)
+                        nonTerminals.addAll(Arrays.stream(line.split(" ")).toList());
+                    else if (i == 1)
+                        terminals.addAll(Arrays.stream(line.split(" ")).toList());
+                    else if (i == 2){
+                        String[] startingSymbol = line.split(" ");
+                        this.startingSymbol = startingSymbol[0];
+                    }
+                    else
+                        this.addProductions(line);
+                    i += 1;
+                }
+                line = br.readLine();
             }
+            br.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
+    }
 
+    public void addProductions(String line){
+        String[] sent = line.trim().split("->");
 
+        List<String> left = Arrays.stream(sent[0].split(" ")).toList();
+
+        String[] right = sent[1].split(" \\| ");
+        List<List<String>> rightProd = new ArrayList<>();
+
+        for(String p: right){
+            String[] rSymb = p.split(" ");
+            List<String> rightList = new ArrayList<>();
+
+            for(String s: rSymb)
+                if(!s.equals(""))
+                    rightList.add(s);
+
+            if(!rightProd.contains(rightList))
+                rightProd.add(rightList);
+        }
+        if(!productions.containsKey(left))
+            productions.put(left, rightProd);
+        else{
+            List<List<String>> prod = productions.get(left);
+            for(List<String> r: rightProd)
+                if(!prod.contains(r))
+                    prod.add(r);
+        }
+    }
+
+    public Map<List<String>, List<List<String>>> getProductions() {
+        return productions;
+    }
+
+    public String getStartingSymbol() {
+        return startingSymbol;
+    }
+
+    public List<List<String>> getProductionsForNonTerminal(String nonTerminal){
+        return productions.get(Arrays.asList(nonTerminal));
+    }
+
+    public boolean isCFG(){
+        for(List<String> lhs : productions.keySet())
+            if(lhs.size() > 1)
+                return false;
+
+        return true;
     }
 }

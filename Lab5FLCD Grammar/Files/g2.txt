@@ -1,0 +1,19 @@
+program -> "VAR" decllist ";" cmpdstmt"."
+decllist -> decl|decl";"decllist
+stmtlist -> stmt |stmt;{stmt}
+stmt -> decl | simplestmt | structstmt
+decl -> IDENTIFIER ":" type
+type -> primarytypes | arraytype
+primarytypes -> "Integer" | "Long" | "Char" | "Boolean" | "Double" | "Short"
+arraytype -> primarytypes "[" nr "]"
+simplestmt -> assignstmt | iostmt
+assignstmt -> IDENTIFIER "=" expression
+expression -> expression "+" term | term
+term -> IDENTIFIER | nr | \"char{char}\"
+iostmt -> "READ" | "WRITE" "(" IDENTIFIER")"
+structstmt -> cmpdstmt | ifstmt | whilestmt
+operation -> "+" | "-" | "*" | "/" | "%" | "^" | "&"
+ifstmt -> "IF" condition "THEN" stmt ["ELSE" stmt]
+whilestmt -> "WHILE" condition "DO" stmt
+condition -> expression RELATION expression
+RELATION -> "<" | "<=" | "=" | "<>" | ">=" | ">"
