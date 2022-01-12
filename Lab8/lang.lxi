@@ -1,0 +1,95 @@
+%{
+#include <math.h>
+#include <string.h>
+%}
+%option noyywrap
+
+DIGIT [0-9]
+NON_ZERO_DIGIT [1-9]
+ZERO_DIGIT [0]
+LETTER [a-zA-Z]
+COMMA [,]
+SIGN [+]|[-]
+
+CHAR ({DIGIT}|{LETTER})  
+NUMBER {ZERO_DIGIT}|{NON_ZERO_DIGIT}{DIGIT}|{SIGN}{DIGIT}
+WORD {LETTER}*
+CHARACTER "'"{CHAR}"'"
+STRING [\"]{CHAR}*[\"]
+
+
+%%
+
+"break"  {printf( "Reserved word: %s\n", yytext ); }
+"case"  {printf( "Reserved word: %s\n", yytext ); }
+"char"  {printf( "Reserved word: %s\n", yytext ); }
+"const"  {printf( "Reserved word: %s\n", yytext ); } 
+"final"  {printf( "Reserved word: %s\n", yytext ); }
+"default"  {printf( "Reserved word: %s\n", yytext ); }
+"do"  {printf( "Reserved word: %s\n", yytext ); }
+"while"  {printf( "Reserved word: %s\n", yytext ); }
+"if"  {printf( "Reserved word: %s\n", yytext ); }
+"else"  {printf( "Reserved word: %s\n", yytext ); }
+"double"  {printf( "Reserved word: %s\n", yytext ); }
+"float"  {printf( "Reserved word: %s\n", yytext ); }
+"int"  {printf( "Reserved word: %s\n", yytext ); }
+"long"  {printf( "Reserved word: %s\n", yytext ); }
+"short"  {printf( "Reserved word: %s\n", yytext ); }
+"for"  {printf( "Reserved word: %s\n", yytext ); }
+"printf"  {printf( "Reserved word: %s\n", yytext ); }
+"return"  {printf( "Reserved word: %s\n", yytext ); }
+"switch"  {printf( "Reserved word: %s\n", yytext ); }
+"void"  {printf( "Reserved word: %s\n", yytext ); }
+"try"  {printf( "Reserved word: %s\n", yytext ); }
+"catch"  {printf( "Reserved word: %s\n", yytext ); }
+"var"  {printf( "Reserved word: %s\n", yytext ); }
+
+{STRING} {printf( "String: %s\n", yytext ); }
+{WORD} {printf( "Word: %s\n", yytext); }
+{CHAR} {printf( "Char: %s\n", yytext ); }
+{NUMBER} {printf( "Number: %s\n", yytext ); }
+{SIGN} {printf( "Sign: %s\n", yytext ); }
+
+
+":" {printf( "Operator: %s\n", yytext ); }
+"\\+" {printf( "Operator: %s\n", yytext ); }
+"\\-" {printf( "Operator: %s\n", yytext ); }
+"*" {printf( "Operator: %s\n", yytext ); }
+"/" {printf( "Operator: %s\n", yytext ); }
+"%" {printf( "Operator: %s\n", yytext ); }
+"~" {printf( "Operator: %s\n", yytext ); }
+"&" {printf( "Operator: %s\n", yytext ); }
+"\\|" {printf( "Operator: %s\n", yytext ); }
+"^" {printf( "Operator: %s\n", yytext ); }
+"<<" {printf( "Operator: %s\n", yytext ); }
+">>" {printf( "Operator: %s\n", yytext ); }
+"!" {printf( "Operator: %s\n", yytext ); }
+"&&" {printf( "Operator: %s\n", yytext ); }
+"||" {printf( "Operator: %s\n", yytext ); }
+"?" {printf( "Operator: %s\n", yytext ); }
+"==" {printf( "Operator: %s\n", yytext ); }
+"!=" {printf( "Operator: %s\n", yytext ); }
+"++" {printf( "Operator: %s\n", yytext ); }
+"--" {printf( "Operator: %s\n", yytext ); }
+"<=" {printf( "Operator: %s\n", yytext ); }
+">=" {printf( "Operator: %s\n", yytext ); }
+"<" {printf( "Operator: %s\n", yytext ); }
+">" {printf( "Operator: %s\n", yytext ); }
+{COMMA} {printf( "Comma: %s\n", yytext ); }
+"(" {printf( "Separator: %s\n", yytext ); }
+")" {printf( "Separator: %s\n", yytext ); }
+"{" {printf( "Separator: %s\n", yytext ); }
+"}" {printf( "Separator: %s\n", yytext ); }
+"[" {printf( "Separator: %s\n", yytext ); }
+"]" {printf( "Separator: %s\n", yytext ); }
+";" {printf( "Separator: %s\n", yytext ); }
+" " {printf( "Separator: %s\n", yytext ); }
+"\t" {printf( "Separator: %s\n", yytext ); }
+"=" {printf( "Set: %s\n", yytext ); }
+
+{SIGN}0 {printf("Illegal number. Cannot start with 0 "); return -1; }
+
+.	{printf( "Lexical error. Unrecognized character"); return -1;}
+
+
+%% 
